@@ -1,7 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
+import time
 
-
+start = time.time()
 # Parameters (This can/will be streamlined with a GUI.. For now, copy + paste desired array into array = in array info)
 # <p>'tp_long' : twin-probe array, longitudinal traverse
 # <p>'tp_broad' : twin-probe array, broadside traverse
@@ -34,7 +35,7 @@ z = 1.1 #depth of sphere from 0.1 to 10
 
 #Other
 rho_background = 1.0
-contrast = rho_sphere - rho_background / (2 * rho_sphere + rho_background)
+contrast = (rho_sphere - rho_background) / (2 * rho_sphere + rho_background)
 
 
 if array == 'wenner_long':   
@@ -167,16 +168,19 @@ p2c2_gf = (p2c2_r / (np.sqrt(np.square(s) * np.square(np.square(p2c2_r) - 1) + n
 
 gf = c1p1_gf - c1p2_gf - p1c2_gf + p2c2_gf
 
-resistivity = (rel_p * contrast * ps * gf + 1.0) / rho_sphere
+resistivity = rel_p * contrast * ps * gf + 1.0
+
 
 
 # In[17]:
 
 line, = plt.plot(x, resistivity)
-plt.show()
+plt.show(block=False)
 
+print time.time()-start
 
-# In[ ]:
+ 
+
 
 
 
