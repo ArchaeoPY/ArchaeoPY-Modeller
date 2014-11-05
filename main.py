@@ -21,7 +21,7 @@ import matplotlib.mlab as mlab
 
 from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
 # For creating simple dialogs
-from formlayout import fedit
+#from formlayout import fedit
 
 # import the MainWindow widget from the converted .ui files
 from GUI.MainUI import Ui_MainWindow
