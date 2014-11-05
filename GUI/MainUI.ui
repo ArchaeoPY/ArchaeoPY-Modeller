@@ -28,7 +28,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <widget class="MatplotlibWidget" name="widget" native="true">
+     <widget class="MplWidget" name="mpl" native="true">
       <property name="minimumSize">
        <size>
         <width>1024</width>
@@ -169,13 +169,7 @@
            </item>
           </layout>
          </widget>
-         <zorder>groupBox_dimensions</zorder>
-         <zorder>gridLayoutWidget_4</zorder>
         </widget>
-        <zorder>gridLayoutWidget</zorder>
-        <zorder>groupBox_feature</zorder>
-        <zorder>groupBox_method</zorder>
-        <zorder>horizontalSpacer_2</zorder>
        </widget>
       </item>
       <item row="0" column="5">
@@ -382,9 +376,6 @@
           </item>
          </layout>
         </widget>
-        <zorder>gridLayoutWidget_3</zorder>
-        <zorder>groupBox_feature</zorder>
-        <zorder>groupBox_feature</zorder>
        </widget>
       </item>
       <item row="0" column="6">
@@ -462,7 +453,7 @@
      <x>0</x>
      <y>0</y>
      <width>1324</width>
-     <height>31</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -470,16 +461,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MatplotlibWidget</class>
+   <class>MplWidget</class>
    <extends>QWidget</extends>
-   <header>matplotlibwidgetFile</header>
+   <header>mplwidget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_RM"/>
   <buttongroup name="buttonGroup_2D3D"/>
  </buttongroups>
 </ui>

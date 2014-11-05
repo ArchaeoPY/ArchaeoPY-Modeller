@@ -6,8 +6,8 @@ import sys, string, os
 # Local variables...
 
 script = 'pyuic4 -o'
-uiFile = ' Bonsall_UI.ui'
-pyFile = ' Bonsall_UI.py'
+uiFile = ' MainUI.ui'
+pyFile = ' MainUI.py'
 
 script = script + pyFile + uiFile
 
