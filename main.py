@@ -26,6 +26,7 @@ from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationTo
 # import the MainWindow widget from the converted .ui files
 from GUI.MainUI import Ui_MainWindow
 
+from Res.res2d import res2D
 #Imports button related tools
 #from includes.Buttons import Button_Definitions
 
@@ -236,12 +237,58 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.enable_3DRes()
                 
         print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
+    def ClearPlot(self):
+        self.mpl.canvas.ax.clear()
+        self.mpl.canvas.draw()
+    def CalculateFields(self):
         
+        if self.radioButton_mag.isChecked():
+            if self.radioButton_2d.isChecked():
+                self.calculate_2DMag()
+            else:
+                self.calculate_3DMag()
+        else:
+            if self.radioButton_2d.isChecked():
+                self.calculate_2DRes()
+            else:
+                self.calculate_3DRes()
+        
+    def calculate_2DRes(self):
+        
+        array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
+        a = self.doubleSpinBox_a.value()
+        a1 = self.doubleSpinBox_a1.value()
+        a2 = self.doubleSpinBox_a2.value()
+        
+        stop = self.doubleSpinBox_traverselength.value()/2.0
+        sample = self.doubleSpinBox_samplingint.value()
+        print -stop,stop+sample,sample
+        x = np.arange(-stop,stop+sample,sample)
+        
+        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
+        contrast = (conductivity - 1.0)/(1 + 2* conductivity)
+        
+        z = self.doubleSpinBox_depth.value()
+        
+        output = res2D(array, a, a1, a2, x, contrast, z)
+        print x
+        print output
+        self.plot_2d(x,output)
+        
+    def plot_2d(self,x,y):
+        self.mpl.canvas.ax.plot(x,y)
+        #self.mpl.canvas.ax.axis('equal')
+        #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
+        #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
+        self.mpl.canvas.draw()
         
     def Button_Definitions(self):
         self.firstrun=True        
         QtCore.QObject.connect(self.radioButton_mag, QtCore.SIGNAL("toggled(bool)"), self.MagRes2D3Dtoggle)
         QtCore.QObject.connect(self.radioButton_2d, QtCore.SIGNAL("toggled(bool)"), self.MagRes2D3Dtoggle)
+        
+        self.pushButton_plot.clicked.connect(self.CalculateFields)
+        self.pushButton_clear.clicked.connect(self.ClearPlot)
         # Buttons in Toolbar
         #self.push_put_data.clicked.connect(self.put_cloud_data)
         #self.push_load_field.clicked.connect(self.load_field)
