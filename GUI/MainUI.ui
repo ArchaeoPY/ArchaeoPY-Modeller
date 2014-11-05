@@ -79,148 +79,6 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
-      <item row="0" column="1">
-       <widget class="QGroupBox" name="groupBox_survey">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>350</width>
-          <height>210</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Survey Parameters</string>
-        </property>
-        <widget class="QWidget" name="gridLayoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>9</x>
-           <y>20</y>
-           <width>291</width>
-           <height>151</height>
-          </rect>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverselength"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_traverseint">
-            <property name="text">
-             <string>Traverse Interval</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_samplingint"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_fieldinclination"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverseint"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_samplingint">
-            <property name="text">
-             <string>Sampling Interval</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_traverselength">
-            <property name="text">
-             <string>Traverse Length</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_fieldinclination">
-            <property name="text">
-             <string>Field Inclination</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QGroupBox" name="groupBox_method">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>190</y>
-           <width>301</width>
-           <height>111</height>
-          </rect>
-         </property>
-         <property name="title">
-          <string>Survey Type</string>
-         </property>
-         <widget class="QWidget" name="gridLayoutWidget_4">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>281</width>
-            <height>91</height>
-           </rect>
-          </property>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QRadioButton" name="radioButton_res">
-             <property name="text">
-              <string>Resistivity</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <attribute name="buttonGroup">
-              <string notr="true">buttonGroup_ResMag</string>
-             </attribute>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QRadioButton" name="radioButton_mag">
-             <property name="text">
-              <string>Magnetometry</string>
-             </property>
-             <attribute name="buttonGroup">
-              <string notr="true">buttonGroup_ResMag</string>
-             </attribute>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QRadioButton" name="radioButton_2d">
-             <property name="text">
-              <string>2D</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <attribute name="buttonGroup">
-              <string notr="true">buttonGroup_2D3D</string>
-             </attribute>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QRadioButton" name="radioButton_3d">
-             <property name="text">
-              <string>3D</string>
-             </property>
-             <attribute name="buttonGroup">
-              <string notr="true">buttonGroup_2D3D</string>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </widget>
-      </item>
       <item row="0" column="5">
        <widget class="QGroupBox" name="groupBox_feature">
         <property name="sizePolicy">
@@ -336,6 +194,19 @@
         </widget>
        </widget>
       </item>
+      <item row="0" column="6">
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item row="0" column="3">
        <widget class="QGroupBox" name="groupBox_instrument">
         <property name="sizePolicy">
@@ -358,11 +229,18 @@
           <rect>
            <x>10</x>
            <y>20</y>
-           <width>294</width>
-           <height>221</height>
+           <width>291</width>
+           <height>251</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_array">
+            <property name="text">
+             <string>Array</string>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_lowersensor">
             <property name="text">
@@ -377,17 +255,13 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_array">
-            <property name="text">
-             <string>Array</string>
-            </property>
-           </widget>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_lowersensor"/>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_a2">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_uppersensor">
             <property name="text">
-             <string>Separation of Sides (a2)</string>
+             <string>Upper Sensor Height</string>
             </property>
            </widget>
           </item>
@@ -398,37 +272,34 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_uppersensor">
-            <property name="text">
-             <string>Upper Sensor Height</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_uppersensor"/>
-          </item>
-          <item row="4" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_lowersensor"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_a2"/>
           </item>
           <item row="2" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_a1"/>
           </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_a"/>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_a2">
+            <property name="text">
+             <string>Separation of Sides (a2)</string>
+            </property>
+           </widget>
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="comboBox_array"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_a"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_a2"/>
           </item>
          </layout>
         </widget>
        </widget>
       </item>
-      <item row="0" column="6">
-       <spacer name="horizontalSpacer_4">
+      <item row="0" column="4">
+       <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -466,18 +337,138 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="4">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="groupBox_survey">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeHint" stdset="0">
+        <property name="minimumSize">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>350</width>
+          <height>210</height>
          </size>
         </property>
-       </spacer>
+        <property name="title">
+         <string>Survey Parameters</string>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>20</y>
+           <width>291</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_traverseint">
+            <property name="text">
+             <string>Traverse Interval</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_samplingint"/>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_fieldinclination"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverseint"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_samplingint">
+            <property name="text">
+             <string>Sampling Interval</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_traverselength">
+            <property name="text">
+             <string>Traverse Length</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_fieldinclination">
+            <property name="text">
+             <string>Field Inclination</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverselength"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_method">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>190</y>
+           <width>301</width>
+           <height>111</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Survey Type</string>
+         </property>
+         <widget class="QWidget" name="gridLayoutWidget_4">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>281</width>
+            <height>91</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="radioButton_res">
+             <property name="text">
+              <string>Resistivity</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QRadioButton" name="radioButton_mag">
+             <property name="text">
+              <string>Magnetometry</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="radioButton_2d">
+             <property name="text">
+              <string>2D</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2D3D</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QRadioButton" name="radioButton_3d">
+             <property name="text">
+              <string>3D</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">buttonGroup_2D3D</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <zorder>gridLayoutWidget</zorder>
+        <zorder>groupBox_method</zorder>
+        <zorder>gridLayoutWidget_3</zorder>
+       </widget>
       </item>
      </layout>
     </item>
@@ -547,6 +538,5 @@
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_2D3D"/>
-  <buttongroup name="buttonGroup_ResMag"/>
  </buttongroups>
 </ui>

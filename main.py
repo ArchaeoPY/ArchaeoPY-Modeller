@@ -48,7 +48,11 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def enable_2DRes(self):
         #Enable / Disable relevant survey Parameters
         self.doubleSpinBox_traverselength.setEnabled(True)
+        self.doubleSpinBox_traverselength.setValue(10.0)
+        self.doubleSpinBox_traverselength.setSingleStep(1.0)
         self.doubleSpinBox_samplingint.setEnabled(True)
+        self.doubleSpinBox_samplingint.setValue(0.1)
+        self.doubleSpinBox_samplingint.setSingleStep(0.1)
         
         self.doubleSpinBox_traverseint.setDisabled(True)
         self.doubleSpinBox_fieldinclination.setDisabled(True)
@@ -56,8 +60,14 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #Enable / Disable instrument parameters
         self.comboBox_array.setEnabled(True)        
         self.doubleSpinBox_a.setEnabled(True)
+        self.doubleSpinBox_a.setValue(1.0)
+        self.doubleSpinBox_a.setSingleStep(0.1)
         self.doubleSpinBox_a1.setEnabled(True)
+        self.doubleSpinBox_a1.setValue(1.0)
+        self.doubleSpinBox_a1.setSingleStep(0.1)
         self.doubleSpinBox_a2.setEnabled(True)
+        self.doubleSpinBox_a2.setValue(1.0)
+        self.doubleSpinBox_a2.setSingleStep(0.1)
         
         self.doubleSpinBox_lowersensor.setDisabled(True)
         self.doubleSpinBox_uppersensor.setDisabled(True)
@@ -65,6 +75,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #Enable / Disable Feature Parameters
         self.comboBox_conductivity.setEnabled(True)
         self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_depth.setValue(1.0)
+        self.doubleSpinBox_depth.setSingleStep(0.1)
         
         self.doubleSpinBox_magsus.setDisabled(True)
         self.doubleSpinBox_length.setDisabled(True)
@@ -237,9 +249,11 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.enable_3DRes()
                 
         print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
+        
     def ClearPlot(self):
         self.mpl.canvas.ax.clear()
         self.mpl.canvas.draw()
+        
     def CalculateFields(self):
         
         if self.radioButton_mag.isChecked():
@@ -262,7 +276,6 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         stop = self.doubleSpinBox_traverselength.value()/2.0
         sample = self.doubleSpinBox_samplingint.value()
-        print -stop,stop+sample,sample
         x = np.arange(-stop,stop+sample,sample)
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
@@ -271,8 +284,6 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         z = self.doubleSpinBox_depth.value()
         
         output = res2D(array, a, a1, a2, x, contrast, z)
-        print x
-        print output
         self.plot_2d(x,output)
         
     def plot_2d(self,x,y):
@@ -329,8 +340,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
 #        labelAction = self.navi_toolbar.addWidget(self.navi_toolbar.locLabel)
 #        labelAction.setVisible(True)
 #Adds Buttons
-        #a = self.navi_toolbar.addAction(self.navi_toolbar._icon('home.png'), 'Home',
-        #                                self.navi_toolbar.home)
+        a = self.navi_toolbar.addAction(self.navi_toolbar._icon('home.png'), 'Home',
+                                        self.navi_toolbar.home)
         #a.setToolTip('returns axes to original position')
         a = self.navi_toolbar.addAction(self.navi_toolbar._icon('move.png'), 'Pan',
                                         self.navi_toolbar.pan)
@@ -345,6 +356,9 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #Button_layout is a QT desginer Grid Layout.
         self.toolbar_grid.addWidget(self.navi_toolbar)
         self.Button_Definitions()
+        
+        #Run Radio Toggle Code to grey / allow relevant options
+        self.MagRes2D3Dtoggle()
 
 
 if __name__ == "__main__":
