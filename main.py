@@ -42,14 +42,129 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
     
     def cleanup(self):
         print 'closing'
-        print 'cleaning up tempfile'
-        print self.tempfile
-        if os.path.isdir(self.tempfile):
-            shutil.rmtree(self.tempfile)
+
     
-    def enable_file_processing(self):
-        self.Push_cor_GNSS.setEnabled(True)
-        self.Push_display_barty_points.setEnabled(True)
+    def enable_2DRes(self):
+        #Enable / Disable relevant survey Parameters
+        self.doubleSpinBox_traverselength.setEnabled(True)
+        self.doubleSpinBox_samplingint.setEnabled(True)
+        
+        self.doubleSpinBox_traverseint.setDisabled(True)
+        self.doubleSpinBox_fieldinclination.setDisabled(True)
+        
+        #Enable / Disable instrument parameters
+        self.comboBox_array.setEnabled(True)        
+        self.doubleSpinBox_a.setEnabled(True)
+        self.doubleSpinBox_a1.setEnabled(True)
+        self.doubleSpinBox_a2.setEnabled(True)
+        
+        self.doubleSpinBox_lowersensor.setDisabled(True)
+        self.doubleSpinBox_uppersensor.setDisabled(True)
+        
+        #Enable / Disable Feature Parameters
+        self.comboBox_conductivity.setEnabled(True)
+        self.doubleSpinBox_depth.setEnabled(True)
+        
+        self.doubleSpinBox_magsus.setDisabled(True)
+        self.doubleSpinBox_length.setDisabled(True)
+        self.doubleSpinBox_width.setDisabled(True)
+        self.doubleSpinBox_strike.setDisabled(True)
+        self.doubleSpinBox_depthextent.setDisabled(True)
+        
+        #Modifys ComboBox
+        self.comboBox_array.clear()
+        self.comboBox_array.addItems(('TP Long','TP Broad','W Long','W Broad','SQ Alpha','SQ Beta', 'SQ Gamma', 'TZ Long', 'TZ Broad', 'TZ Theta'))
+        
+    def enable_3DRes(self):
+        #Enable / Disable relevant survey Parameters
+        self.doubleSpinBox_traverselength.setEnabled(True)
+        self.doubleSpinBox_traverseint.setEnabled(True)
+        self.doubleSpinBox_samplingint.setEnabled(True)
+        
+        self.doubleSpinBox_fieldinclination.setDisabled(True)
+        
+        #Enable / Disable instrument parameters
+        self.comboBox_array.setEnabled(True)
+        self.doubleSpinBox_a.setEnabled(True)
+        self.doubleSpinBox_a1.setEnabled(True)
+        self.doubleSpinBox_a2.setEnabled(True)
+        
+        self.doubleSpinBox_lowersensor.setDisabled(True)
+        self.doubleSpinBox_uppersensor.setDisabled(True)
+        
+        #Enable / Disable Feature Parameters
+        self.comboBox_conductivity.setEnabled(True)
+        self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_length.setEnabled(True)
+        self.doubleSpinBox_width.setEnabled(True)
+        self.doubleSpinBox_depthextent.setEnabled(True)
+        
+        self.doubleSpinBox_magsus.setDisabled(True)
+        self.doubleSpinBox_strike.setDisabled(True)
+        
+        #Modifys ComboBox
+        self.comboBox_array.clear()
+        self.comboBox_array.addItems(('TP Long','TP Broad','W Long','W Broad','SQ Alpha','SQ Beta', 'SQ Gamma', 'TZ Long', 'TZ Broad', 'TZ Theta'))
+        
+    def enable_3DMag(self):
+        #Enable / Disable relevant survey Parameters
+        self.doubleSpinBox_traverselength.setEnabled(True)
+        self.doubleSpinBox_traverseint.setEnabled(True)
+        self.doubleSpinBox_samplingint.setEnabled(True)
+        self.doubleSpinBox_fieldinclination.setEnabled(True)
+        
+        #Enable / Disable instrument parameters
+        self.comboBox_array.setEnabled(True)
+        self.doubleSpinBox_lowersensor.setEnabled(True)
+        self.doubleSpinBox_uppersensor.setEnabled(True)
+        
+        self.doubleSpinBox_a.setDisabled(True)
+        self.doubleSpinBox_a1.setDisabled(True)
+        self.doubleSpinBox_a2.setDisabled(True)
+        
+        #Enable / Disable Feature Parameters
+        self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_length.setEnabled(True)
+        self.doubleSpinBox_width.setEnabled(True)
+        self.doubleSpinBox_depthextent.setEnabled(True)
+        self.doubleSpinBox_magsus.setEnabled(True)
+        self.doubleSpinBox_strike.setEnabled(True)
+        
+        self.comboBox_conductivity.setDisabled(True)
+        
+        #Modifys ComboBox
+        self.comboBox_array.clear()
+        self.comboBox_array.addItems(('Vertical', 'Total', 'Horizontal X', 'Horizontal Y'))
+        
+    def enable_2DMag(self):
+        #Enable / Disable relevant survey Parameters
+        self.doubleSpinBox_traverselength.setEnabled(True)
+        self.doubleSpinBox_traverseint.setEnabled(True)
+        self.doubleSpinBox_samplingint.setEnabled(True)
+        self.doubleSpinBox_fieldinclination.setEnabled(True)
+        
+        #Enable / Disable instrument parameters
+        self.comboBox_array.setEnabled(True)
+        self.doubleSpinBox_lowersensor.setEnabled(True)
+        self.doubleSpinBox_uppersensor.setEnabled(True)
+        
+        self.doubleSpinBox_a.setDisabled(True)
+        self.doubleSpinBox_a1.setDisabled(True)
+        self.doubleSpinBox_a2.setDisabled(True)
+        
+        #Enable / Disable Feature Parameters
+        self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_length.setEnabled(True)
+        self.doubleSpinBox_width.setEnabled(True)
+        self.doubleSpinBox_depthextent.setEnabled(True)
+        self.doubleSpinBox_magsus.setEnabled(True)
+        self.doubleSpinBox_strike.setEnabled(True)
+        
+        self.comboBox_conductivity.setDisabled(True)
+        
+        #Modifys ComboBox
+        self.comboBox_array.clear()
+        self.comboBox_array.addItems(('Vertical', 'Total', 'Horizontal X', 'Horizontal Y'))
         
     def tar_data_files(self, output_name, files):
         if not os.path.isfile(output_name):
@@ -71,291 +186,6 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
     def Warning_Dialog(self, title, text):
         message = QtGui.QMessageBox.warning(self,str(title),str(text))
-        
-    def internet_off(self):
-        message = QtGui.QMessageBox.critical(self,
-                            "Critial",
-                            "Unable to connect to AWS Cloud\n\nSorry, this means processing will have to wait\n\nYour computer just isn't big enough") 
-   
-    def put_cloud_data(self):
-       #Searches Directory for GNSS, Bart1, Bart2 files
-        put_cloud_list =[('Number of Fields', 1),
-               ('Overwrite Data', False)]
-        fields,self.overwrite = fedit(put_cloud_list, title="Put_cloud_data",
-                           comment="Select the required options then select files")
-        
-        for i in range(fields):
-            filename = unicode(QtGui.QFileDialog.getOpenFileName(self,
-                        "Select Bart1 data file","", "*Bart1.txt"))
-            print filename
-            if filename:
-                self.projectname = os.path.dirname(filename)
-                self.dirname = os.path.dirname(filename)
-                self.filename = os.path.basename(filename)
-                #moves to project folder
-                os.chdir(self.projectname)
-                print 'changed directory'
-                print self.projectname
-                print self.dirname
-                print self.filename
-                print self.projectname.split('/')
-                self.projectname = self.projectname.split('/')[-1]
-                print self.projectname
-                #Produces list of Barty1 files inside project folder
-                files = glob.glob(str(self.projectname)+'*'+'Bart1'+'*'+'.txt')
-                print files
-                self.progressBar.setRange(1,len(files))
-                self.progressBarValue = 1
-                self.progressBar.setValue(self.progressBarValue)
-                for line in files:
-                    traverse_no = str(line[len(self.projectname):-9])
-                    b1_path,b2_path,g_path = CartEasyN_filenames(self.dirname, self.projectname, traverse_no)
-                    if not b1_path:
-                        continue
-                    self.tempfile = tempfile.mkdtemp()
-                    tar_path, cpath = cloud_path(self.tempfile, self.projectname, traverse_no)
-                    self.tar_data_files(tar_path,[b1_path,b2_path,g_path]) 
-                    self.put_file(tar_path,cpath)
-                    self.progressBarValue += 1
-                    self.progressBar.setValue(self.progressBarValue)
-                    #Forces the GUI to update on progress bar value change
-                    QtCore.QCoreApplication.instance().processEvents()
-                
-                QtGui.QMessageBox.warning(self,'Upload Complete','Sucessfully Uploaded ' + str(self.projectname))
-                #Enable Load Field Button
-                self.push_load_field.setEnabled(True)
-                
-    def load_field(self):
-        ''' Copies Data from AWS S3 to Picloud
-            Untars the files
-        '''
-        
-        #Initiates Queues early
-        file_list_q = cloud.queue.get(cap('file_list'+ self.UUID,39))
-        untar_list_q = cloud.queue.get(cap('untar_list'+ self.UUID,39))
-        self.pros_list_q = cloud.queue.get(cap('processing_list'+ str(uuid.uuid1()),39))
-        
-        field = self.bucket.list(prefix = self.project_code, delimiter='/')
-        field_list = [0]
-        for a in field:
-            temp = a.name
-            temp2 = temp.split('/')
-            if len(temp2) > 3:
-                field_list.append(temp)
-            
-        print field_list
-        get_field_list =[('Choose Field', field_list)]
-        field = fedit(get_field_list, title="Choose a field",
-                           comment="Choose the Field you want to Process")
-        
-        self.progressBar.setRange(1,1000)
-        self.progressBarValue = 10
-        self.progressBar.setValue(self.progressBarValue)
-        
-        field = [field[0]]
-        try:
-            field = int(field[0])
-            
-        except:
-            field = str(field[0])
-            
-        if type(field) == str:
-            field = field
-        else:
-            field = field_list[int(field)+1]
-        print field
-        
-        #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-                
-        self.field = str(field)
-        self.field = self.field.strip()
-        self.field = self.field.split('/')
-        self.field = self.field[-2]
-        
-        if self.field[-1] != '/':
-            print self.field
-            self.field = self.field + '/'
-            print self.field
-        
-        print self.field
-        #Inititates Class
-        bucketfroms3_q = Bucket_from_S3_Q() 
-        
-                #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-        
-        #Sets field to be environment variable
-        os.environ["CARTEASYN_F"] = str(self.field)
-        
-        #This a much more sensible way of getting information to Queue classes...
-        #except it doesn't work
-        bucketfroms3_q.field=str(self.field)
-        
-                #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-        
-        file_list_t = bucket.list(prefix = str(field), delimiter=str('_.tar.gz'))
-        
-                #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-        
-         #Attatches Queue to transfer data from AWS to picloud Bucket
-        file_list_q.attach(bucketfroms3_q, output_queues=[untar_list_q], readers_per_job=4, _env='CartEasyN', _os_env_vars=os.environ.keys())        
-
-        #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-        
-        #Starts Untaring Queue
-        untar_list_q.attach(Bucket_Untar, output_queues=[self.pros_list_q], readers_per_job=4, _env='CartEasyN', _os_env_vars=os.environ.keys())        
-        
-                #Updates Progress Bar
-        self.progressBarValue += 10
-        self.progressBar.setValue(self.progressBarValue)
-        QtCore.QCoreApplication.instance().processEvents()
-        
-        #Starts filling Queue after attatching
-        for a in file_list_t:
-            #Updates Progress Bar
-            self.progressBarValue += 1
-            self.progressBar.setValue(self.progressBarValue)
-            QtCore.QCoreApplication.instance().processEvents()
-            
-            temp = str(a.name)
-            print temp
-            if str('_.tar.gz') in temp:
-                #temp = [str(self.UUID) +',' + str(temp)]
-                file_list_q.push([temp])
-                
-        
-        #Fills rest of Progress Bar
-        #Keeps people happy
-        for i in xrange(self.progressBarValue,1000):
-            self.progressBarValue += 1
-            self.progressBar.setValue(self.progressBarValue)
-            QtCore.QCoreApplication.instance().processEvents()
-            
-        QtGui.QMessageBox.warning(self,'Field Loaded','Loaded Field ' + str(field))
-        self.enable_file_processing()
-        
-    def data_SourceFile(self):
-        #Used to Load data from Directory
-        self.B1_ars=[]
-        self.B2_ars=[]
-        self.G_ars=[]
-        self.GNSS_xy=[]
-        g_x = np.empty(0)
-        g_y = np.empty(0)
-        
-        filename = unicode(QtGui.QFileDialog.getOpenFileName(self,
-           "Select Bart1 data file","", "*Bart1.txt"))
-        if filename:
-            print filename
-            self.projectname = os.path.dirname(filename)
-            self.dirname = os.path.dirname(filename)
-            self.filename = os.path.basename(filename)
-            #moves to project folder
-            os.chdir(self.projectname)
-            #determines project title from filename
-            ####****Might need to change this****#######
-            print self.projectname
-            print os.sep
-            self.projectname = self.projectname.split(os.sep)[-1]
-            print self.projectname
-            #Produces list of Barty1 files inside project folder
-            files = glob.glob(str(self.projectname)+'*'+'Bart1'+'*'+'.txt')
-            print files
-            #Initialises ProgressBar to range
-            self.progressBar.setRange(1,len(files))
-            self.progressBarValue = 1
-            self.progressBar.setValue(self.progressBarValue)
-            for line in files:
-                traverse_no = str(line[len(self.projectname):-9])
-                b1_path,b2_path,g_path = CartEasyN_filenames(self.dirname, self.projectname, traverse_no)
-                b1, b2, g = load_barty(b1_path), load_barty(b2_path), load_GNSS(g_path)
-                if type(b2) != bool and type(g) != bool:
-                    self.B1_ars.append(b1)
-                    self.B2_ars.append(b2)
-                    self.G_ars.append(g)
-                    if len(g) > 2:
-                        GNSS_xy = GNSS_xy_calc(g)
-                        g_x = np.concatenate((g_x, GNSS_xy[:,1]))
-                        g_y = np.concatenate((g_y, GNSS_xy[:,2]))
-                self.progressBarValue += 1
-                self.progressBar.setValue(self.progressBarValue)
-                #Forces the GUI to update on progress bar value change
-                QtCore.QCoreApplication.instance().processEvents()
-                
-            print np.shape(g_x), np.shape(g_y)
-            g_x, g_y = np.array(g_x, dtype=float), np.array(g_y, dtype=float)
-            self.display_points(g_x,g_y)
-            self.Enable_buttons()
-        
-    
-    def load_cloud_points(self):
-        
-        ''' Processes GNSS Points on Picloud
-            Saves as Numpy Array
-            Amalgamates GNSS XY Arrays
-            Downloads from Picloud
-            Displays Points
-        '''
-        
-        self.progressBar.setRange(1,100)
-        self.progressBarValue = 1       
-        
-        print 'loading cloud points'
-        cloudgnss_xy = Cloud_GNSS_XY()
-        
-        cloudgnss_xy.field = self.field
-        cloudgnss_xy.project = self.project_code
-        cloudgnss_xy.UUID = self.UUID
-        
-        cloud_gnss_amalg = Cloud_GNSS_amalg()
-        #Currently assumes Previous Job (load field) has run
-        #self.pros_list_q = cloud.queue.get(cap('processing_list'+ self.UUID,39))
-        self.g_amalg_q = cloud.queue.get(cap('G_amalg'+ str(uuid.uuid1()),39))
-        self.bart_pros_list_q = cloud.queue.get(cap('bart_pros_list'+ str(uuid.uuid1()),39))
-        
-        self.pros_list_q.attach(cloudgnss_xy, output_queues=[self.g_amalg_q,self.bart_pros_list_q], max_parallel_jobs=4, readers_per_job=2, _env='CartEasyN', os_env_vars=os.environ.keys())
-        self.g_amalg_q.attach(cloud_gnss_amalg, max_parallel_jobs=1, readers_per_job=1, _type='f2', _env='CartEasyN', _os_env_vars=os.environ.keys())        
-
-        queue = cloud.queue.get(cap('GNSS_amalg_done'+ self.UUID,39))
-        
-        while True:
-            gnns_xy_path = queue.pop(max_count =1, timeout=1)
-            print gnns_xy_path
-            try:
-                gnns_xy_path = str(gnns_xy_path[0])
-                print gnns_xy_path
-                break
-            except:
-                print 'going round the loop'
-                
-            self.progressBarValue += 1
-            self.progressBar.setValue(self.progressBarValue)
-            #Forces the GUI to update on progress bar value change
-            QtCore.QCoreApplication.instance().processEvents()
-        #Remove Uneccessary Queues
-        self.pros_list_q.delete()
-        self.g_amalg_q.delete()
-        temp_file = tempfile.mkstemp()[1]
-        
-        cloud.bucket.get(gnns_xy_path,file_path = temp_file)
-        
-        GNSS_xy = np.load(temp_file)
-        
-        self.display_points(GNSS_xy[:,0],GNSS_xy[:,1])
         
     def display_points(self, x, y):
         print 'display updating with Northings/Eastings'
@@ -391,54 +221,28 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.mpl.canvas.draw()
         print 'canvas drawn'  
         
-    
-    def calculate_barty_locs(self):
-        print 'defining'
-        #Converts GNSS location & time to Barty Location
-#        self.B1_ars = np.array(self.B1_ars, dtype=str)
-#        self.B2_ars = np.array(self.B2_ars, dtype=str)
-#        self.G_ars = np.array(self.G_ars, dtype=str)
-        print 'converted'
-        self.progressBar.setRange(0,len(self.B1_ars))
-        self.progressBarValue = 0
-        self.progressBar.setValue(self.progressBarValue)
-        self.sens1 = np.empty([0,4])
-        self.sens2 = np.empty([0,4])
-        self.sens3 = np.empty([0,4])
-        self.sens4 = np.empty([0,4])
-        print 'starting'
-        #Process Barty1 and Barty2 concurrently if present
-        line_count = 0
-        print len(self.B1_ars), len(self.B2_ars), len(self.G_ars), len(self.GNSS_xy)
-        for lineB1 in self.B1_ars:
-            print line_count
-            lineB2 = self.B2_ars[line_count]
-            lineG = self.GNSS_xy[line_count]
-            try:
-                sens1, sens2 = barty_gps_xy(lineG, lineB1, Logger=1)
-                sens3, sens4 = barty_gps_xy(lineG, lineB2, Logger=2)
-                print np.shape(sens1)
-                self.sens1=np.vstack((self.sens1,sens1))
-                self.sens2=np.vstack((self.sens2,sens2))
-                self.sens3=np.vstack((self.sens3,sens3))
-                self.sens4=np.vstack((self.sens4,sens4))
-            except:
-                print 'somethngs looking a bit weird'
+    def MagRes2D3Dtoggle(self):
+        print 'Toggled'
+        
+        if self.radioButton_mag.isChecked():
+            if self.radioButton_2d.isChecked():
+                self.enable_2DMag()
+            else:
+                self.enable_3DMag()
+        else:
+            if self.radioButton_2d.isChecked():
+                self.enable_2DRes()
+            else:
+                self.enable_3DRes()
                 
-            print np.shape(self.sens1)
-            line_count += 1
-            
-            self.progressBarValue += 1
-            self.progressBar.setValue(self.progressBarValue)
-            #Forces the GUI to update on progress bar value change
-            QtCore.QCoreApplication.instance().processEvents()
-        self.display_b_points()
-    
+        print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
+        
         
     def Button_Definitions(self):
         self.firstrun=True        
-        
-         # Buttons in Toolbar
+        QtCore.QObject.connect(self.radioButton_mag, QtCore.SIGNAL("toggled(bool)"), self.MagRes2D3Dtoggle)
+        QtCore.QObject.connect(self.radioButton_2d, QtCore.SIGNAL("toggled(bool)"), self.MagRes2D3Dtoggle)
+        # Buttons in Toolbar
         #self.push_put_data.clicked.connect(self.put_cloud_data)
         #self.push_load_field.clicked.connect(self.load_field)
         #self.Push_cor_GNSS.clicked.connect(self.load_cloud_points)
@@ -478,9 +282,9 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
 #        labelAction = self.navi_toolbar.addWidget(self.navi_toolbar.locLabel)
 #        labelAction.setVisible(True)
 #Adds Buttons
-        a = self.navi_toolbar.addAction(self.navi_toolbar._icon('home.png'), 'Home',
-                                        self.navi_toolbar.home)
-        a.setToolTip('returns axes to original position')
+        #a = self.navi_toolbar.addAction(self.navi_toolbar._icon('home.png'), 'Home',
+        #                                self.navi_toolbar.home)
+        #a.setToolTip('returns axes to original position')
         a = self.navi_toolbar.addAction(self.navi_toolbar._icon('move.png'), 'Pan',
                                         self.navi_toolbar.pan)
         a.setToolTip('Pan axes with left mouse, zoom with right')
@@ -492,7 +296,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         a.setToolTip('Save the figure')
 
         #Button_layout is a QT desginer Grid Layout.
-        #self.Button_layout.addWidget(self.navi_toolbar)
+        self.toolbar_grid.addWidget(self.navi_toolbar)
         self.Button_Definitions()
 
 
