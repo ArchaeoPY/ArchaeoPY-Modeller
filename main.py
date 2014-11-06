@@ -27,6 +27,7 @@ from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationTo
 from GUI.MainUI import Ui_MainWindow
 
 from Res.res2d import res2D
+from Res.res2dpseudo import res2Dpseudo
 #Imports button related tools
 #from includes.Buttons import Button_Definitions
 
@@ -89,6 +90,50 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #Modifys ComboBox
         self.comboBox_array.clear()
         self.comboBox_array.addItems(('TP Long','TP Broad','W Long','W Broad','SQ Alpha','SQ Beta', 'SQ Gamma', 'TZ Long', 'TZ Broad', 'TZ Theta'))
+
+    def enable_2DRespseudo(self):
+        #Enable / Disable relevant survey Parameters
+        self.doubleSpinBox_traverselength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_traverselength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_traverselength.setSingleStep(1.0) 
+        self.doubleSpinBox_samplingint.setEnabled(True)
+        self.doubleSpinBox_samplingint.setValue(0.1)
+        self.doubleSpinBox_samplingint.setSingleStep(0.1)
+        
+        #Disables magnetometry parameters--irrelevant for res modelling
+        self.doubleSpinBox_traverseint.setDisabled(True)
+        self.doubleSpinBox_fieldinclination.setDisabled(True)
+        
+        #Enable / Disable instrument parameters
+        self.comboBox_array.setEnabled(True)        
+        self.doubleSpinBox_a.setEnabled(True)
+        self.doubleSpinBox_a.setValue(0.5)
+        self.doubleSpinBox_a.setSingleStep(0.1)
+        self.doubleSpinBox_a1.setEnabled(True)
+        self.doubleSpinBox_a1.setValue(1.0)
+        self.doubleSpinBox_a1.setSingleStep(0.1)
+        self.doubleSpinBox_a2.setEnabled(True)
+        self.doubleSpinBox_a2.setValue(0.5)
+        self.doubleSpinBox_a2.setSingleStep(0.1)
+        
+        self.doubleSpinBox_lowersensor.setDisabled(True)
+        self.doubleSpinBox_uppersensor.setDisabled(True)
+        
+        #Enable / Disable Feature Parameters
+        self.comboBox_conductivity.setEnabled(True)
+        self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_depth.setValue(1.0)
+        self.doubleSpinBox_depth.setSingleStep(0.1)
+        
+        self.doubleSpinBox_magsus.setDisabled(True)
+        self.doubleSpinBox_length.setDisabled(True)
+        self.doubleSpinBox_width.setDisabled(True)
+        self.doubleSpinBox_strike.setDisabled(True)
+        self.doubleSpinBox_depthextent.setDisabled(True)
+        
+        #Modifys ComboBox
+        self.comboBox_array.clear()
+        self.comboBox_array.addItems(('TP Long','TP Broad','W Long','W Broad','SQ Alpha','SQ Beta', 'SQ Gamma'))
         
     def enable_3DRes(self):
         #Enable / Disable relevant survey Parameters
@@ -248,8 +293,11 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             if self.radioButton_2d.isChecked():
                 self.enable_2DRes()
-            else:
+            elif self.radioButton_3d.isChecked():
                 self.enable_3DRes()
+            else:
+                self.enable_2DRespseudo()
+        
                 
         print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
         
@@ -297,10 +345,11 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
     def calculate_2DRespseudosections(self):
    
-        array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
-        a = 
-        a1 = 
-        a2 = 
+        array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g'][self.comboBox_array.currentIndex()]
+        a = self.doubleSpinBox_a.value()
+        a1 = self.doubleSpinBox_a1.value()
+        a2 = self.doubleSpinBox_a2.value()
+        array_range = np.arange(a, a1 + a2, a2) 
         
         stop = self.doubleSpinBox_traverselength.value()/2.0
         sample = self.doubleSpinBox_samplingint.value()
@@ -311,14 +360,14 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         z = self.doubleSpinBox_depth.value()
         
-        output = 
+        output = res2Dpseudo(array, array_range, x, contrast, z) 
         
         #Defines variables for saving
         self.x = x
         self.y = output
         self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
-        self.plot_2d()     
+        self.plot_2dpseudo    
         
     def save_csv(self):
         
@@ -338,6 +387,10 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
         #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
         self.mpl.canvas.draw()
+    
+    def plot_2dpseudo(self):
+        self.mpl.canvas.ax.clear()
+        self.mpl.canvas.ax.imshow()
         
     def Button_Definitions(self):
         self.firstrun=True        
