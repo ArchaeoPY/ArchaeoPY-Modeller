@@ -279,15 +279,33 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         x = np.arange(-stop,stop+sample,sample)
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
-        contrast = (conductivity - 1.0)/(1 + 2* conductivity)
+        contrast = (conductivity - 1.0)/(1 + (2* conductivity))
         
         z = self.doubleSpinBox_depth.value()
         
         output = res2D(array, a, a1, a2, x, contrast, z)
-        self.plot_2d(x,output)
         
-    def plot_2d(self,x,y):
-        self.mpl.canvas.ax.plot(x,y)
+        #Defines variables for saving
+        self.x = x
+        self.y = output
+        self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
+        
+        self.plot_2d()
+        
+    def save_csv(self):
+        
+        fname = QtGui.QFileDialog.getSaveFileName(self, 'Save File', 
+                '*.csv')
+        print fname, str(fname)
+        output_text = np.column_stack((self.x,self.y))
+        np.savetxt(str(fname),output_text,fmt ='%1.2f',delimiter=',', header = self.header)
+        
+    def copy_to_clipboard(self):
+        pixmap = QtGui.QPixmap.grabWidget(self.mpl.canvas)
+        QtGui.QApplication.clipboard().setPixmap(pixmap)
+        
+    def plot_2d(self):
+        self.mpl.canvas.ax.plot(self.x,self.y)
         #self.mpl.canvas.ax.axis('equal')
         #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
         #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
@@ -300,6 +318,12 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.pushButton_plot.clicked.connect(self.CalculateFields)
         self.pushButton_clear.clicked.connect(self.ClearPlot)
+        QtGui.QShortcut(QtGui.QKeySequence("Ctrl+P"),self, self.CalculateFields)
+        
+        self.action_Save_Data.triggered.connect(self.save_csv)
+        QtGui.QShortcut(QtGui.QKeySequence("Ctrl+S"),self, self.save_csv)
+        
+        QtGui.QShortcut(QtGui.QKeySequence("Ctrl+C"),self, self.copy_to_clipboard)
         # Buttons in Toolbar
         #self.push_put_data.clicked.connect(self.put_cloud_data)
         #self.push_load_field.clicked.connect(self.load_field)
@@ -358,6 +382,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.Button_Definitions()
         
         #Run Radio Toggle Code to grey / allow relevant options
+        self.radioButton_2d.click()
+        self.radioButton_res.click()
         self.MagRes2D3Dtoggle()
 
 
