@@ -315,8 +315,10 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             if self.radioButton_2d.isChecked():
                 self.calculate_2DRes()
-            else:
+            elif self.radioButton_3d.isChecked():
                 self.calculate_3DRes()
+            else:
+                self.calculate_2DRespseudo()
         
     def calculate_2DRes(self):
         
@@ -341,9 +343,12 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.y = output
         self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
+        self.xtitle = 'Relative Position (x)'
+        self.ytitle = 'Relative Response'
+        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
         self.plot_2d()
         
-    def calculate_2DRespseudosections(self):
+    def calculate_2DRespseudo(self):
    
         array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g'][self.comboBox_array.currentIndex()]
         a = self.doubleSpinBox_a.value()
@@ -360,14 +365,18 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         z = self.doubleSpinBox_depth.value()
         
-        output = res2Dpseudo(array, array_range, x, contrast, z) 
+        self.output = res2Dpseudo(array, array_range, x, contrast, z)
+        self.xtitle = 'Relative Position (x)'
+        self.ytitle = 'Relative Depth'
+        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
+        self.arrayrange = array_range        
         
         #Defines variables for saving
-        self.x = x
-        self.y = output
-        self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
+        #self.x = x
+        #self.y = output
+        #self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
-        self.plot_2dpseudo    
+        self.plot_2dpseudo()    
         
     def save_csv(self):
         
@@ -386,11 +395,22 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.mpl.canvas.ax.axis('equal')
         #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
         #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
+        self.mpl.canvas.ax.set_xlabel(self.xtitle)
+        self.mpl.canvas.ax.set_ylabel(self.ytitle)
+        self.mpl.canvas.ax.set_title(self.title)
         self.mpl.canvas.draw()
     
     def plot_2dpseudo(self):
         self.mpl.canvas.ax.clear()
-        self.mpl.canvas.ax.imshow()
+        self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys)
+        self.mpl.canvas.ax.set_xlabel(self.xtitle)
+        self.mpl.canvas.ax.set_ylabel(self.ytitle)
+        self.mpl.canvas.ax.set_title(self.title)
+        
+        cb = plt.colorbar(self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys), ticks=self.arrayrange)
+        
+        #self.mpl.canvas.colorbar(self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys), ticks=self.arrayrange)
+        self.mpl.canvas.draw()
         
     def Button_Definitions(self):
         self.firstrun=True        

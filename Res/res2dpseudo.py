@@ -119,3 +119,4 @@ def res2Dpseudo(array, array_range, x, contrast, z):
         else:
             pseudo = np.vstack((pseudo,resistivity))
 
+    return pseudo
