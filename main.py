@@ -2,7 +2,7 @@
 """
 Created on Wed Nov 05 10:50:37 2014
 
-@author: FPopecarter
+@author: FPopecarter and JCHarris
 """
 #import core modules
 import os
@@ -30,6 +30,7 @@ from Res.res2d import res2D
 #Imports button related tools
 #from includes.Buttons import Button_Definitions
 
+#Creates Main UI window
 class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
     """Customization for Qt Designer created window"""
     
@@ -44,16 +45,17 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def cleanup(self):
         print 'closing'
 
-    
+    #Defines 2D Res modelling component of UI window: what parameters the user can select.
     def enable_2DRes(self):
         #Enable / Disable relevant survey Parameters
-        self.doubleSpinBox_traverselength.setEnabled(True)
-        self.doubleSpinBox_traverselength.setValue(10.0)
-        self.doubleSpinBox_traverselength.setSingleStep(1.0)
+        self.doubleSpinBox_traverselength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_traverselength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_traverselength.setSingleStep(1.0) 
         self.doubleSpinBox_samplingint.setEnabled(True)
         self.doubleSpinBox_samplingint.setValue(0.1)
         self.doubleSpinBox_samplingint.setSingleStep(0.1)
         
+        #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
         self.doubleSpinBox_fieldinclination.setDisabled(True)
         
@@ -119,6 +121,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.comboBox_array.clear()
         self.comboBox_array.addItems(('TP Long','TP Broad','W Long','W Broad','SQ Alpha','SQ Beta', 'SQ Gamma', 'TZ Long', 'TZ Broad', 'TZ Theta'))
         
+    
     def enable_3DMag(self):
         #Enable / Disable relevant survey Parameters
         self.doubleSpinBox_traverselength.setEnabled(True)
@@ -291,6 +294,31 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
         self.plot_2d()
+        
+    def calculate_2DRespseudosections(self):
+   
+        array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
+        a = 
+        a1 = 
+        a2 = 
+        
+        stop = self.doubleSpinBox_traverselength.value()/2.0
+        sample = self.doubleSpinBox_samplingint.value()
+        x = np.arange(-stop,stop+sample,sample)
+        
+        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
+        contrast = (conductivity - 1.0)/(1 + (2* conductivity))
+        
+        z = self.doubleSpinBox_depth.value()
+        
+        output = 
+        
+        #Defines variables for saving
+        self.x = x
+        self.y = output
+        self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
+        
+        self.plot_2d()     
         
     def save_csv(self):
         
