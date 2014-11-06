@@ -54,7 +54,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_traverselength.setSingleStep(1.0) 
         self.doubleSpinBox_samplingint.setEnabled(True)
         self.doubleSpinBox_samplingint.setValue(0.1)
-        self.doubleSpinBox_samplingint.setSingleStep(0.1)
+        self.doubleSpinBox_samplingint.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
@@ -98,7 +98,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_traverselength.setSingleStep(1.0) 
         self.doubleSpinBox_samplingint.setEnabled(True)
         self.doubleSpinBox_samplingint.setValue(0.1)
-        self.doubleSpinBox_samplingint.setSingleStep(0.1)
+        self.doubleSpinBox_samplingint.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
@@ -108,10 +108,10 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.comboBox_array.setEnabled(True)        
         self.doubleSpinBox_a.setEnabled(True)
         self.doubleSpinBox_a.setValue(0.5)
-        self.doubleSpinBox_a.setSingleStep(0.1)
+        self.doubleSpinBox_a.setSingleStep(0.5)
         self.doubleSpinBox_a1.setEnabled(True)
-        self.doubleSpinBox_a1.setValue(1.0)
-        self.doubleSpinBox_a1.setSingleStep(0.1)
+        self.doubleSpinBox_a1.setValue(10.0)
+        self.doubleSpinBox_a1.setSingleStep(0.5)
         self.doubleSpinBox_a2.setEnabled(True)
         self.doubleSpinBox_a2.setValue(0.5)
         self.doubleSpinBox_a2.setSingleStep(0.1)
@@ -368,7 +368,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.output = res2Dpseudo(array, array_range, x, contrast, z)
         self.xtitle = 'Relative Position (x)'
         self.ytitle = 'Relative Depth'
-        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
+        self.title = 'Resistivity Pseudosection With ' + str(array) + ' Over ' + str(conductivity) + ' Ohm/m Sphere.'
         self.arrayrange = array_range        
         
         #Defines variables for saving
@@ -377,7 +377,37 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
         self.plot_2dpseudo()    
+ 
+    def calculate_3DRes(self):
         
+        array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
+        a = self.doubleSpinBox_a.value()
+        a1 = self.doubleSpinBox_a1.value()
+        a2 = self.doubleSpinBox_a2.value()
+        
+        #stop = self.doubleSpinBox_traverselength.value()
+        #xsample = self.doubleSpinBox_samplingint.value()
+        #ysample = self.doubleSpinBox_traverseint.value()
+        #x = np.arange(stop,stop+xsample,xsample)
+        #y = np.arange(-stop,stop+ysample,ysample)         
+        
+        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
+        contrast = (conductivity - 1.0)/(1 + (2* conductivity))
+        
+        z = self.doubleSpinBox_depth.value()
+        
+        output = res2D(array, a, a1, a2, x, contrast, z)
+        
+        #Defines variables for saving
+        self.x = x
+        self.y = output
+        self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
+        
+        self.xtitle = 'Relative Position (x)'
+        self.ytitle = 'Relative Response'
+        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
+        self.plot_2d()
+       
     def save_csv(self):
         
         fname = QtGui.QFileDialog.getSaveFileName(self, 'Save File', 
@@ -395,19 +425,19 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #self.mpl.canvas.ax.axis('equal')
         #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
         #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
-        self.mpl.canvas.ax.set_xlabel(self.xtitle)
-        self.mpl.canvas.ax.set_ylabel(self.ytitle)
-        self.mpl.canvas.ax.set_title(self.title)
+        self.mpl.canvas.ax.set_xlabel(self.xtitle, size = 15)
+        self.mpl.canvas.ax.set_ylabel(self.ytitle, size = 15)
+        self.mpl.canvas.ax.set_title(self.title, size = 15)
         self.mpl.canvas.draw()
     
     def plot_2dpseudo(self):
         self.mpl.canvas.ax.clear()
         self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys)
-        self.mpl.canvas.ax.set_xlabel(self.xtitle)
-        self.mpl.canvas.ax.set_ylabel(self.ytitle)
-        self.mpl.canvas.ax.set_title(self.title)
+        self.mpl.canvas.ax.set_xlabel(self.xtitle, size = 15)
+        self.mpl.canvas.ax.set_ylabel(self.ytitle, size = 15)
+        self.mpl.canvas.ax.set_title(self.title, size = 15)
         
-        cb = plt.colorbar(self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys), ticks=self.arrayrange)
+        self.cb = plt.colorbar(self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys), ticks=self.arrayrange)
         
         #self.mpl.canvas.colorbar(self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys), ticks=self.arrayrange)
         self.mpl.canvas.draw()
