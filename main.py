@@ -97,8 +97,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_traverselength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
         self.doubleSpinBox_traverselength.setSingleStep(1.0) 
         self.doubleSpinBox_samplingint.setEnabled(True)
-        self.doubleSpinBox_samplingint.setValue(0.1)
-        self.doubleSpinBox_samplingint.setSingleStep(0.05)
+        self.doubleSpinBox_samplingint.setValue(1.0)
+        self.doubleSpinBox_samplingint.setSingleStep(2.0)
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
@@ -287,24 +287,28 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         if self.radioButton_mag.isChecked():
             if self.radioButton_2d.isChecked():
+                self.ClearPlot()                
                 self.enable_2DMag()
             else:
+                self.ClearPlot()                 
                 self.enable_3DMag()
         else:
             if self.radioButton_2d.isChecked():
+                self.ClearPlot() 
                 self.enable_2DRes()
             elif self.radioButton_3d.isChecked():
+                self.ClearPlot() 
                 self.enable_3DRes()
             else:
+                self.ClearPlot() 
                 self.enable_2DRespseudo()
         
                 
         print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
-        
-    def ClearPlot(self):
-        self.mpl.canvas.ax.clear()
-        self.mpl.canvas.draw()
-        
+
+             
+    
+    
     def CalculateFields(self):
         
         if self.radioButton_mag.isChecked():
@@ -345,7 +349,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.xtitle = 'Relative Position (x)'
         self.ytitle = 'Relative Response'
-        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
+        self.title = 'Resistivity Profile with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
         self.plot_2d()
         
     def calculate_2DRespseudo(self):
@@ -420,19 +424,26 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         pixmap = QtGui.QPixmap.grabWidget(self.mpl.canvas)
         QtGui.QApplication.clipboard().setPixmap(pixmap)
         
-    def plot_2d(self):
+    def ClearPlot(self):
+        self.mpl.canvas.ax.clear()
+        self.mpl.canvas.draw()
+        
+    def plot_2d(self):        
         self.mpl.canvas.ax.plot(self.x,self.y)
-        #self.mpl.canvas.ax.axis('equal')
-        #self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
-        #self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
+        self.mpl.canvas.ax.axis('auto')
+        #self.mpl.canvas.ax.set_xlim(xmin=np.min(self.x), xmax=(np.max(self.x)))
+        self.mpl.canvas.ax.set_ylim(ymin=np.min(self.y), ymax=(np.max(self.y)))
+        self.mpl.canvas.ax.set_autoscale_on(True)
+        self.mpl.canvas.ax.autoscale_view(True,True,True)
         self.mpl.canvas.ax.set_xlabel(self.xtitle, size = 15)
         self.mpl.canvas.ax.set_ylabel(self.ytitle, size = 15)
         self.mpl.canvas.ax.set_title(self.title, size = 15)
         self.mpl.canvas.draw()
     
     def plot_2dpseudo(self):
-        self.mpl.canvas.ax.clear()
-        self.mpl.canvas.ax.imshow(self.output,cmap=plt.cm.Greys)
+        self.ClearPlot()
+        temp = np.flipud(self.output)
+        self.mpl.canvas.ax.imshow(temp, interpolation='none', cmap=plt.cm.Greys,aspect='auto',origin='upper')
         self.mpl.canvas.ax.set_xlabel(self.xtitle, size = 15)
         self.mpl.canvas.ax.set_ylabel(self.ytitle, size = 15)
         self.mpl.canvas.ax.set_title(self.title, size = 15)
@@ -482,7 +493,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         #Adds a Matplotlib Toolbar to the display, clears the display and adds only the required buttons
         self.navi_toolbar = NavigationToolbar(self.mpl.canvas, self)
-        self.navi_toolbar.clear()
+        #self.navi_toolbar.clear()
         
  # Add the x,y location widget at the right side of the toolbar
  # The stretch factor is 1 which means any resizing of the toolbar
