@@ -369,50 +369,46 @@
           <rect>
            <x>9</x>
            <y>20</y>
-           <width>291</width>
-           <height>151</height>
+           <width>321</width>
+           <height>141</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_traverseint">
-            <property name="text">
-             <string>Traverse Interval</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_samplingint"/>
-          </item>
-          <item row="3" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_fieldinclination"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverseint"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_samplingint">
-            <property name="text">
-             <string>Sampling Interval</string>
-            </property>
-           </widget>
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_traverselength">
             <property name="text">
-             <string>Traverse Length</string>
+             <string> Length (x, y)</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_fieldinclination">
             <property name="text">
              <string>Field Inclination</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_traverseint">
+            <property name="text">
+             <string>Interval (x, y)</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_traverselength"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverseint"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_samplingint"/>
           </item>
          </layout>
         </widget>

@@ -389,16 +389,18 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         a1 = self.doubleSpinBox_a1.value()
         a2 = self.doubleSpinBox_a2.value()
         
-        #stop = self.doubleSpinBox_traverselength.value()
-        #xsample = self.doubleSpinBox_samplingint.value()
-        #ysample = self.doubleSpinBox_traverseint.value()
-        #x = np.arange(stop,stop+xsample,xsample)
-        #y = np.arange(-stop,stop+ysample,ysample)         
+        stop = self.doubleSpinBox_traverselength.value()
+        xsample = self.doubleSpinBox_samplingint.value()
+        ysample = self.doubleSpinBox_traverseint.value()
+        x = np.arange(stop,stop+xsample,xsample)
+        y = np.arange(-stop,stop+ysample,ysample)
+        
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
         contrast = (conductivity - 1.0)/(1 + (2* conductivity))
         
-        z = self.doubleSpinBox_depth.value()
+        z = self.doubleSpinBox_depth.value() #Depth to top of bounding box
+        z1 = self.doubleSpinBox_depthextent.value() #Depth to bottom of bounding box
         
         output = res2D(array, a, a1, a2, x, contrast, z)
         
