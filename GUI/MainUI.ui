@@ -399,16 +399,16 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverselength"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_xlength"/>
           </item>
           <item row="1" column="2">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_traverseint"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_ysample"/>
           </item>
           <item row="0" column="2">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_ylength"/>
           </item>
           <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_samplingint"/>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_xsample"/>
           </item>
          </layout>
         </widget>
