@@ -58,6 +58,7 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
+        #self.doubleSpinBox_ylength
         self.doubleSpinBox_fieldinclination.setDisabled(True)
         
         #Enable / Disable instrument parameters
