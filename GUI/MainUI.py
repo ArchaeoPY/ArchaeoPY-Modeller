@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainUI.ui'
 #
-# Created: Fri Nov 07 16:45:23 2014
+# Created: Mon Nov 10 23:01:48 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -205,18 +205,18 @@ class Ui_MainWindow(object):
         self.label_traverseint = QtGui.QLabel(self.gridLayoutWidget)
         self.label_traverseint.setObjectName(_fromUtf8("label_traverseint"))
         self.gridLayout_2.addWidget(self.label_traverseint, 1, 0, 1, 1)
-        self.doubleSpinBox_traverselength = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
-        self.doubleSpinBox_traverselength.setObjectName(_fromUtf8("doubleSpinBox_traverselength"))
-        self.gridLayout_2.addWidget(self.doubleSpinBox_traverselength, 0, 1, 1, 1)
-        self.doubleSpinBox_traverseint = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
-        self.doubleSpinBox_traverseint.setObjectName(_fromUtf8("doubleSpinBox_traverseint"))
-        self.gridLayout_2.addWidget(self.doubleSpinBox_traverseint, 1, 2, 1, 1)
-        self.doubleSpinBox = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
-        self.doubleSpinBox.setObjectName(_fromUtf8("doubleSpinBox"))
-        self.gridLayout_2.addWidget(self.doubleSpinBox, 0, 2, 1, 1)
-        self.doubleSpinBox_samplingint = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
-        self.doubleSpinBox_samplingint.setObjectName(_fromUtf8("doubleSpinBox_samplingint"))
-        self.gridLayout_2.addWidget(self.doubleSpinBox_samplingint, 1, 1, 1, 1)
+        self.doubleSpinBox_xlength = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
+        self.doubleSpinBox_xlength.setObjectName(_fromUtf8("doubleSpinBox_xlength"))
+        self.gridLayout_2.addWidget(self.doubleSpinBox_xlength, 0, 1, 1, 1)
+        self.doubleSpinBox_ysample = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
+        self.doubleSpinBox_ysample.setObjectName(_fromUtf8("doubleSpinBox_ysample"))
+        self.gridLayout_2.addWidget(self.doubleSpinBox_ysample, 1, 2, 1, 1)
+        self.doubleSpinBox_ylength = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
+        self.doubleSpinBox_ylength.setObjectName(_fromUtf8("doubleSpinBox_ylength"))
+        self.gridLayout_2.addWidget(self.doubleSpinBox_ylength, 0, 2, 1, 1)
+        self.doubleSpinBox_xsample = QtGui.QDoubleSpinBox(self.gridLayoutWidget)
+        self.doubleSpinBox_xsample.setObjectName(_fromUtf8("doubleSpinBox_xsample"))
+        self.gridLayout_2.addWidget(self.doubleSpinBox_xsample, 1, 1, 1, 1)
         self.groupBox_method = QtGui.QGroupBox(self.groupBox_survey)
         self.groupBox_method.setGeometry(QtCore.QRect(0, 180, 351, 121))
         self.groupBox_method.setObjectName(_fromUtf8("groupBox_method"))
