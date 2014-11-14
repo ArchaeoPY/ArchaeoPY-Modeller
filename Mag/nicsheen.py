@@ -104,7 +104,7 @@ mz = (0.1,0.5)
 
 sensor_z = (0.5,1.0)
 
-inclination = np.deg2rad(90)
+inclination = np.deg2rad(70)
 susceptibility = 1
 strike = np.deg2rad(0)
 theta = np.deg2rad(0) #This doesn't appear in Modeller2 GUI
