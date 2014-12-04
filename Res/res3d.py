@@ -1,35 +1,13 @@
-def res3D(array, a, a1, a2, x, contrast, )
-# coding: utf-8
+#def res3D(array, a, a1, a2, x, contrast, )
 
-# In[1]:
 
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
-#get_ipython().magic(u'matplotlib inline')
-#import mpld3
-#mpld3.enable_notebook()
 from matplotlib import pyplot as plt
 from itertools import izip, product
 
-
-
-
-# Parameters (This can/will be streamlined with a GUI.. For now, copy + paste desired array into array = in array info)
-# <p>'tp_long' : twin-probe array, longitudinal traverse
-# <p>'tp_broad' : twin-probe array, broadside traverse
-# <p>'wenner_long' : wenner array, longitudinal traverse
-# <p>'wenner_broad' : wenner array, broadside traverse
-# <p>'square_a' : square array, alpha
-# <p>'square_b' : square array, beta
-# <p>'square_g' : square array, gamma
-# <p>'trap_l' : trapezoid array, longitudinal
-# <p>'trap_b' : trapezoid array, broadside
-# <p>'trap_t' : trapezoid array, theta
-
-# In[35]:
-
 #Array Info
-array = 'wenner_broad' #Select from one of the array's above
+array = 'tp_broad' #Select from one of the array's above
 ps = 1 #for twin-probe, wenner, square, and trapezoid (side 1) arrays. From 0.1 to 5
 ps1 = 3 #for trapezoid array (side 2). From 0.1 to 5
 ps2 = 3 #for trapezoid array (separation of sides) From 0.1 to 5
@@ -48,13 +26,11 @@ radius = 0.25 * ps #relative radius
 diameter = 2 * radius #relative sphere diameter
 sphere_x = 10
 sphere_y = 10 
-sphere_z = 1 
+sphere_z = 2 
 
 #Other
 rho_background = 1.0
 contrast = (rho_sphere - rho_background) / (2 * rho_sphere + rho_background)
-
-
 sphere_xyz = np.array([sphere_x, sphere_y, sphere_z])
 #print sphere_xyz[0]
 
@@ -65,11 +41,8 @@ x_grid_pos = np.arange(np.divide(x_step,2.0), x_length, x_step)
 y_grid_pos = np.arange(np.divide(y_step,2.0), y_length, y_step)
 xgrid, ygrid = np.meshgrid(x_grid_pos, y_grid_pos)
 
-
-# In[37
-
 if array == 'wenner_long':
-    C1_x = xgrid
+    C1_x = xgrid #X Grid positions of C1 electrode
     C1_y = np.add(ygrid, 1.5 * ps)
     C1_z = np.zeros(C1_x.shape)
 
@@ -226,7 +199,9 @@ if array == 'trap_l': #Trapezoid Array: Longitudinal config
     p1c2_p = np.sqrt(np.square(ps2) + np.square(ps1-(ps1-ps) / 2))
     p2c2_p = ps1
     
-    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2))) - 1.0)
+    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2))) - 1.0)
    
 if array == 'trap_b': #Trapezoid Array: Broadside Config       
     C1_x = np.subtract(xgrid, ps / 2.0)
@@ -246,7 +221,9 @@ if array == 'trap_b': #Trapezoid Array: Broadside Config
     p1c2_p = np.sqrt(np.square(ps2) + np.square(ps1-(ps1-ps) / 2))
     p2c2_p = ps1
     
-    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2))) - 1.0)
+    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2))) - 1.0)
     
 if array == 'trap_t':#Trapezoid Array: Theta config
     C1_x = np.subtract(xgrid, ps / 2.0)
@@ -262,57 +239,63 @@ if array == 'trap_t':#Trapezoid Array: Theta config
     P2_z = np.zeros(P1_x.shape)
         
     c1p1_p = ps
-    c1p2_p = sqrt(square(ps2) + square(ps1-(ps1-ps) / 2))
-    p1c2_p = sqrt(square(ps2) + square(ps1-(ps1-ps) / 2))
+    c1p2_p = np.sqrt(np.square(ps2) + np.square(ps1-(ps1-ps) / 2))
+    p1c2_p = np.sqrt(np.square(ps2) + np.square(ps1-(ps1-ps) / 2))
     p2c2_p = ps1
     
-    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 +     np.square(ps2))) - 1.0)
+    rel_p = np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2)))/(np.sqrt((ps1 * ps) + np.sqrt(np.square(ps1 - ps) / 2.0 + \
+    np.square(ps2))) - 1.0)
 
-
-# In[38]:
 
 resistivity_sum = np.ones(C1_x.shape)
 
-#for xyz in sphere_xyz:
+for xyz in sphere_xyz:
 
-c1_x_delta = np.subtract(C1_x,sphere_x) #change in x-between C1(x) and sphere(x)
-c1_y_delta = np.subtract(C1_y,sphere_y) #change in y-between C1(y) and sphere(y)
-c1_z_delta = np.add(C1_z,sphere_z) #change in z-between C1(z) and sphere(z)
-c1_l = np.sqrt(np.square(c1_x_delta)+ np.square(c1_y_delta)) #horizontal (x,y) distance between C1 and centre of sphere
-c1_s = np.sqrt(np.square(c1_z_delta) + np.square(c1_x_delta) + np.square(c1_y_delta)) #relative depth of sphere
-c1_r = np.sqrt(np.square(c1_l)+np.square(c1_s)) #distance to sphere
+    c1_x_delta = np.subtract(C1_x,sphere_x) #change in x-between C1(x) and sphere(x)
+    c1_y_delta = np.subtract(C1_y,sphere_y) #change in y-between C1(y) and sphere(y)
+    c1_z_delta = np.add(C1_z,sphere_z) #change in z-between C1(z) and sphere(z)
+    c1_l = np.sqrt(np.square(c1_x_delta)+ np.square(c1_y_delta)) #horizontal (x,y) distance between C1 and centre of sphere
+    c1_s = np.sqrt(np.square(c1_z_delta) + np.square(c1_x_delta) + np.square(c1_y_delta)) #relative depth of sphere
+    c1_r = np.sqrt(np.square(c1_l)+np.square(c1_s)) #distance to sphere
+    
+    p1_x_delta = np.subtract(P1_x,sphere_x) #same as previous, but for P1
+    p1_y_delta = np.subtract(P1_y,sphere_y)
+    p1_z_delta = np.add(P1_z,sphere_z)
+    p1_l = np.sqrt(np.square(p1_x_delta)+ np.square(p1_y_delta)) #horizontal (x,y) distance between P1 and centre of sphere
+    p1_s = np.sqrt(np.square(p1_z_delta) + np.square(p1_x_delta) + np.square(p1_y_delta)) #relative depth of sphere
+    p1_r = np.sqrt(np.square(p1_l)+np.square(p1_s)) #distance to sphere
+    
+    p2_x_delta = np.subtract(P2_x,sphere_x)
+    p2_y_delta = np.subtract(P2_y,sphere_y)
+    p2_z_delta = np.add(P2_z,sphere_z)
+    p2_l = np.sqrt(np.square(p2_x_delta)+ np.square(p2_y_delta)) #horizontal (x,y) distance between P2 and centre of sphere
+    p2_s = np.sqrt(np.square(p2_z_delta) + np.square(p2_x_delta) + np.square(p2_y_delta)) #relative depth of sphere
+    p2_r = np.sqrt(np.square(p2_l)+np.square(p2_s))
+         
+    #Calculating the geometry factors for the probe pairs: 
+    
+    c1p1_gf = (c1_r/(np.sqrt(np.square(c1_s)*np.square(np.square(c1_r)-1.0)+ \
+    np.square((np.square(c1_r)*(c1p1_p-c1_l))+c1_l))))-(1.0/(c1_r*(np.sqrt(np.square(c1_r)\
+    +np.square(c1p1_p)-2.0*c1_l*c1p1_p))))
+    
+    c1p2_gf =(c1_r/(np.sqrt(np.square(c1_s)*np.square(np.square(c1_r)-1.0)+ \
+    np.square((np.square(c1_r)*(c1p2_p-c1_l))+c1_l))))-(1.0/(c1_r*(np.sqrt(np.square(c1_r)\
+    +np.square(c1p2_p)-2.0*c1_l*c1p2_p))))
+    
+    p1c2_gf = (p1_r/(np.sqrt(np.square(p1_s)*np.square(np.square(p1_r)-1.0)+\
+    np.square((np.square(p1_r)*(p1c2_p-p1_l))+p1_l))))-(1.0/(p1_r*(np.sqrt(np.square(p1_r)\
+    +np.square(p1c2_p)-2.0*p1_l*p1c2_p))))
+    
+    p2c2_gf = (p2_r/(np.sqrt(np.square(p2_s)*np.square(np.square(p2_r)-1.0)+\
+    np.square((np.square(p2_r)*(p2c2_p-p2_l))+p2_l))))-(1.0/(p2_r*(np.sqrt(np.square(p2_r)\
+    +np.square(p2c2_p-2.0*p2_l*p2c2_p)))))
+    
+    #Calculating the probe pairs resistivity responses: 
+    gf = c1p1_gf - c1p2_gf - p1c2_gf + p2c2_gf
+    resistivity = contrast * rel_p * gf * ps
+    response = np.add(resistivity_sum, resistivity)
 
-p1_x_delta = np.subtract(P1_x,sphere_x) #same as previous, but for P1
-p1_y_delta = np.subtract(P1_y,sphere_y)
-p1_z_delta = np.add(P1_z,sphere_z)
-p1_l = np.sqrt(np.square(p1_x_delta)+ np.square(p1_y_delta)) #horizontal (x,y) distance between P1 and centre of sphere
-p1_s = np.sqrt(np.square(p1_z_delta) + np.square(p1_x_delta) + np.square(p1_y_delta)) #relative depth of sphere
-p1_r = np.sqrt(np.square(p1_l)+np.square(p1_s)) #distance to sphere
-
-p2_x_delta = np.subtract(P2_x,sphere_x)
-p2_y_delta = np.subtract(P2_y,sphere_y)
-p2_z_delta = np.add(P2_z,sphere_z)
-p2_l = np.sqrt(np.square(p2_x_delta)+ np.square(p2_y_delta)) #horizontal (x,y) distance between P2 and centre of sphere
-p2_s = np.sqrt(np.square(p2_z_delta) + np.square(p2_x_delta) + np.square(p2_y_delta)) #relative depth of sphere
-p2_r = np.sqrt(np.square(p2_l)+np.square(p2_s))
-     
-#Calculating the geometry factors for the probe pairs: 
-
-c1p1_gf = (c1_r / (np.sqrt(np.square(c1_s) * np.square(np.square(c1_r) - 1) +     np.square((np.square(c1_r) * (c1p1_p - c1_l)) + c1_l)))) - (1 / (c1_r *     (np.sqrt(np.square(c1_r) + np.square(c1p1_p) - 2 * c1_l * c1p1_p))))
-
-c1p2_gf = (c1_r / (np.sqrt(np.square(c1_s) * np.square(np.square(c1_r) - 1) +     np.square((np.square(c1_r) * (c1p2_p - c1_l)) + c1_l)))) - (1 / (c1_r *     (np.sqrt(np.square(c1_r) + np.square(c1p2_p) - 2 * c1_l * c1p2_p))))
-
-p1c2_gf = (p1_r / (np.sqrt(np.square(p1_s) * np.square(np.square(p1_r) - 1) +     np.square((np.square(p1_r) * (p1c2_p - p1_l)) + p1_l)))) - (1 / (p1_r *     (np.sqrt(np.square(p1_r) + np.square(p1c2_p) - 2 * p1_l * p1c2_p))))
-
-p2c2_gf = (p2_r / (np.sqrt(np.square(p2_s) * np.square(np.square(p2_r) - 1) +     np.square((np.square(p2_r) * (p2c2_p - p2_l)) + p2_l)))) - (1 / (p2_r *     (np.sqrt(np.square(p2_r) + np.square(p2c2_p) - 2 * p2_l * p2c2_p))))
-
-#Calculating the probe pairs resistivity responses: 
-gf = c1p1_gf - c1p2_gf - p1c2_gf + p2c2_gf
-resistivity = contrast * rel_p * gf * ps
-response = np.add(resistivity_sum, resistivity)
-
-
-# In[39]:
 
 '''Plot Results: 2D'''
 fig, ax = plt.subplots()
@@ -322,10 +305,6 @@ cb = fig.colorbar(p, ax=ax)
 ax.set_xlabel('X Position')
 ax.set_ylabel('Y Position')
 plt.title(array+': Insulating Feature')
-# In[15]:
-
-
-# In[34]:
 
 '''Plot Results: Wireframe'''
 fig = plt.figure(figsize=(10, 7))
@@ -334,11 +313,11 @@ surf = ax.plot_wireframe(xgrid, ygrid, response, rstride=4, cstride=4, color='b'
 ax.set_xlabel('X Position')
 ax.set_ylabel('Y Position')
 ax.set_zlabel('Response')
-plt.title('Square Alpha: Insulating Feature')
+plt.title('Twin-Probe Broadside: Insulating Feature')
 plt.show()
 
 
-# In[ ]:
+
 
 
 

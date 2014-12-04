@@ -7,17 +7,17 @@ Created on Wed Nov 05 10:50:37 2014
 #import core modules
 import os
 import sys
-import glob
+#import glob
 import numpy as np
-import re
+#import re
 import atexit
-import shutil
+#import shutil
 
 #Import GUI related modules
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
+#import matplotlib.mlab as mlab
 
 from matplotlib.backends.backend_qt4 import NavigationToolbar2QT as NavigationToolbar
 # For creating simple dialogs
@@ -49,16 +49,17 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
     #Defines 2D Res modelling component of UI window: what parameters the user can select.
     def enable_2DRes(self):
         #Enable / Disable relevant survey Parameters
-        self.doubleSpinBox_traverselength.setEnabled(True) #Length of traverse (relative units)
-        self.doubleSpinBox_traverselength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
-        self.doubleSpinBox_traverselength.setSingleStep(1.0) 
-        self.doubleSpinBox_samplingint.setEnabled(True)
-        self.doubleSpinBox_samplingint.setValue(0.1)
-        self.doubleSpinBox_samplingint.setSingleStep(0.05)
+        self.doubleSpinBox_xlength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_xlength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_xlength.setSingleStep(1.0) 
+        self.doubleSpinBox_xsample.setEnabled(True)
+        self.doubleSpinBox_xsample.setValue(0.1)
+        self.doubleSpinBox_xsample.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
-        #self.doubleSpinBox_ylength
+        self.doubleSpinBox_ylength.setDisabled(True)
+        self.doubleSpinBox_ysample.setDisabled(True)
         self.doubleSpinBox_fieldinclination.setDisabled(True)
         
         #Enable / Disable instrument parameters
@@ -75,6 +76,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.doubleSpinBox_lowersensor.setDisabled(True)
         self.doubleSpinBox_uppersensor.setDisabled(True)
+        self.doubleSpinBox_ylength.setDisabled(True)
+        self.doubleSpinBox_ysample.setDisabled(True)
         
         #Enable / Disable Feature Parameters
         self.comboBox_conductivity.setEnabled(True)
@@ -94,12 +97,12 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
 
     def enable_2DRespseudo(self):
         #Enable / Disable relevant survey Parameters
-        self.doubleSpinBox_traverselength.setEnabled(True) #Length of traverse (relative units)
-        self.doubleSpinBox_traverselength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
-        self.doubleSpinBox_traverselength.setSingleStep(1.0) 
-        self.doubleSpinBox_samplingint.setEnabled(True)
-        self.doubleSpinBox_samplingint.setValue(1.0)
-        self.doubleSpinBox_samplingint.setSingleStep(2.0)
+        self.doubleSpinBox_xlength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_xlength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_xlength.setSingleStep(1.0) 
+        self.doubleSpinBox_xsample.setEnabled(True)
+        self.doubleSpinBox_xsample.setValue(0.1)
+        self.doubleSpinBox_xsample.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
         self.doubleSpinBox_traverseint.setDisabled(True)
@@ -119,6 +122,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.doubleSpinBox_lowersensor.setDisabled(True)
         self.doubleSpinBox_uppersensor.setDisabled(True)
+        self.doubleSpinBox_ylength.setDisabled(True)
+        self.doubleSpinBox_ysample.setDisabled(True)
         
         #Enable / Disable Feature Parameters
         self.comboBox_conductivity.setEnabled(True)
@@ -138,9 +143,19 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
     def enable_3DRes(self):
         #Enable / Disable relevant survey Parameters
-        self.doubleSpinBox_traverselength.setEnabled(True)
-        self.doubleSpinBox_traverseint.setEnabled(True)
-        self.doubleSpinBox_samplingint.setEnabled(True)
+        self.doubleSpinBox_xlength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_xlength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_xlength.setSingleStep(1.0) 
+        self.doubleSpinBox_xsample.setEnabled(True)
+        self.doubleSpinBox_xsample.setValue(0.1)
+        self.doubleSpinBox_xsample.setSingleStep(0.05)
+
+        self.doubleSpinBox_ylength.setEnabled(True) #Length of traverse (relative units)
+        self.doubleSpinBox_ylength.setValue(10.0) #Sets the default value for traverse length to be 10 (relative units)
+        self.doubleSpinBox_ylength.setSingleStep(1.0) 
+        self.doubleSpinBox_ysample.setEnabled(True)
+        self.doubleSpinBox_ysample.setValue(0.1)
+        self.doubleSpinBox_ysample.setSingleStep(0.05)
         
         self.doubleSpinBox_fieldinclination.setDisabled(True)
         
@@ -156,9 +171,16 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         #Enable / Disable Feature Parameters
         self.comboBox_conductivity.setEnabled(True)
         self.doubleSpinBox_depth.setEnabled(True)
+        self.doubleSpinBox_depth.setSingleStep(0.5)
         self.doubleSpinBox_length.setEnabled(True)
+        self.doubleSpinBox_length.setValue(1.0)
+        self.doubleSpinBow_length.setSingleStep(0.5)
         self.doubleSpinBox_width.setEnabled(True)
+        self.doubleSpinBox_width.setValue(1.0)
+        self.doubleSpinBox_width.setValue(0.5)
         self.doubleSpinBox_depthextent.setEnabled(True)
+        self.doubleSpinBox_depthextent.setValue(1.0)
+        self.doubleSpinBox_SingleStep(0.5)
         
         self.doubleSpinBox_magsus.setDisabled(True)
         self.doubleSpinBox_strike.setDisabled(True)
@@ -228,60 +250,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.comboBox_array.clear()
         self.comboBox_array.addItems(('Vertical', 'Total', 'Horizontal X', 'Horizontal Y'))
         
-    def tar_data_files(self, output_name, files):
-        if not os.path.isfile(output_name):
-            tar = tarfile.open(output_name, "w:gz")
-            for name in files:
-                arcname = os.path.basename(name)
-                tar.add(name,arcname=arcname)
-            tar.close()  
-        
-    def put_file(self, file_path, cloud_path):
-        k = Key(self.bucket)
-        string = str(self.project_code) + '/' + cloud_path
-        print string
-        if self.bucket.get_key(string) == None or self.overwrite:
-            k.key = string
-            k.set_contents_from_filename(file_path)
-            
-
-        
     def Warning_Dialog(self, title, text):
         message = QtGui.QMessageBox.warning(self,str(title),str(text))
-        
-    def display_points(self, x, y):
-        print 'display updating with Northings/Eastings'
-#        self.Eastings = GPSMainWindow.data[:,1]
-#        self.Northings = GPSMainWindow.data[:,0]
-        self.mpl.canvas.ax.clear()
-        self.mpl.canvas.ax.axis('equal')
-        print 'canvas cleared'
-        print len(x), 'points'
-        self.mpl.canvas.ax.plot(x,y, 'o', ms=1, color='black')
-         # reset the axes limits
-        self.mpl.canvas.ax.set_xlim(xmin=np.min(x), xmax=(np.max(x)))
-        self.mpl.canvas.ax.set_ylim(ymin=np.min(y), ymax=(np.max(y)))
-        self.mpl.canvas.ax.grid(True)
-        self.mpl.canvas.draw()
-        print 'canvas drawn'
-        
-    def display_b_points(self):
-        print 'display updating with Northings/Eastings'
-#        self.Eastings = GPSMainWindow.data[:,1]
-#        self.Northings = GPSMainWindow.data[:,0]
-        self.mpl.canvas.ax.clear()
-        self.mpl.canvas.ax.axis('equal')
-        print 'canvas cleared'
-        self.mpl.canvas.ax.plot(self.sens1[:,1],self.sens1[:,2], 'o', ms=1, color='red')
-        self.mpl.canvas.ax.plot(self.sens2[:,1],self.sens2[:,2], 'o', ms=1, color='blue')
-        self.mpl.canvas.ax.plot(self.sens3[:,1],self.sens3[:,2], 'o', ms=1, color='green')
-        self.mpl.canvas.ax.plot(self.sens4[:,1],self.sens4[:,2], 'o', ms=1, color='yellow')
-         # reset the axes limits
-        #self.mpl.canvas.ax.set_xlim(xmin=np.min(self.sens1[:,1]), xmax=(np.max(self.sens1[:,1])))
-        #self.mpl.canvas.ax.set_ylim(ymin=np.min(self.sens1[:,2]), ymax=(np.max(self.sens1[:,2])))
-        self.mpl.canvas.ax.grid(True)
-        self.mpl.canvas.draw()
-        print 'canvas drawn'  
         
     def MagRes2D3Dtoggle(self):
         print 'Toggled'
@@ -307,9 +277,6 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 
         print self.radioButton_mag.isChecked(),self.radioButton_res.isChecked()
 
-             
-    
-    
     def CalculateFields(self):
         
         if self.radioButton_mag.isChecked():
@@ -326,22 +293,23 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
                 self.calculate_2DRespseudo()
         
     def calculate_2DRes(self):
-        
+        #Assign user input to be run through 2DRes Algorithms
         array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
         a = self.doubleSpinBox_a.value()
         a1 = self.doubleSpinBox_a1.value()
         a2 = self.doubleSpinBox_a2.value()
         
+        #Create an array of x positions
         stop = self.doubleSpinBox_traverselength.value()/2.0
         sample = self.doubleSpinBox_samplingint.value()
         x = np.arange(-stop,stop+sample,sample)
         
-        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
-        contrast = (conductivity - 1.0)/(1 + (2* conductivity))
+        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()] #Sphere Conductivity
+        contrast = (conductivity - 1.0)/(1 + (2* conductivity)) #Contrast Factor
         
-        z = self.doubleSpinBox_depth.value()
+        z = self.doubleSpinBox_depth.value() #Sphere Depth
         
-        output = res2D(array, a, a1, a2, x, contrast, z)
+        output = res2D(array, a, a1, a2, x, contrast, z) #Send to res2D
         
         #Defines variables for saving
         self.x = x
@@ -354,21 +322,22 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.plot_2d()
         
     def calculate_2DRespseudo(self):
-   
+        #Assign user input to be run through 2DRes Algorithms   
         array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g'][self.comboBox_array.currentIndex()]
         a = self.doubleSpinBox_a.value()
         a1 = self.doubleSpinBox_a1.value()
         a2 = self.doubleSpinBox_a2.value()
         array_range = np.arange(a, a1 + a2, a2) 
-        
+
+        #Create an array of x positions        
         stop = self.doubleSpinBox_traverselength.value()/2.0
         sample = self.doubleSpinBox_samplingint.value()
         x = np.arange(-stop,stop+sample,sample)
         
-        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
-        contrast = (conductivity - 1.0)/(1 + (2* conductivity))
+        conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()] #Sphere Conductivity
+        contrast = (conductivity - 1.0)/(1 + (2* conductivity)) #Contrast Factor
         
-        z = self.doubleSpinBox_depth.value()
+        z = self.doubleSpinBox_depth.value() #Sphere Depth
         
         self.output = res2Dpseudo(array, array_range, x, contrast, z)
         self.xtitle = 'Relative Position (x)'
@@ -383,19 +352,24 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.plot_2dpseudo()    
  
-    def calculate_3DRes(self):
-        
+    def calculate_3DRes(self): #NOT YET IMPLEMENTED!!!!
+        #Assign user input to be run through 3DRes Algorithms        
         array = ['tp_long','tp_broad','wenner_long','wenner_broad','square_a','square_b','square_g','trap_l','trap_b','trap_t'][self.comboBox_array.currentIndex()]
         a = self.doubleSpinBox_a.value()
         a1 = self.doubleSpinBox_a1.value()
         a2 = self.doubleSpinBox_a2.value()
         
-        stop = self.doubleSpinBox_traverselength.value()
-        xsample = self.doubleSpinBox_samplingint.value()
-        ysample = self.doubleSpinBox_traverseint.value()
-        x = np.arange(stop,stop+xsample,xsample)
-        y = np.arange(-stop,stop+ysample,ysample)
+        #Greate grid of x and y positions
+        x_length = self.doubleSpinBox_xlength.value()
+        x_step = self.doubleSpinBox_xsample.value()
+        x_grid_pos = np.arange(np.divide(x_step,2.0), x_length, x_step)
+        y_length = self.doubleSpinBox_ylength.value()
+        y_step = self.doubleSpinBox_ysample.value()
+        y_grid_pos = np.arange(np.divide(y_step,2.0), y_length, y_step)
+        xgrid, ygrid = np.meshgrid(x_grid_pos, y_grid_pos)   
         
+        #Fill Bounding Box with Spheres
+                
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()]
         contrast = (conductivity - 1.0)/(1 + (2* conductivity))
@@ -403,17 +377,17 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         z = self.doubleSpinBox_depth.value() #Depth to top of bounding box
         z1 = self.doubleSpinBox_depthextent.value() #Depth to bottom of bounding box
         
-        output = res2D(array, a, a1, a2, x, contrast, z)
+        #output = res2D(array, a, a1, a2, x, contrast, z)
         
         #Defines variables for saving
-        self.x = x
-        self.y = output
-        self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
+        #self.x = x
+        #self.y = output
+        #self.header = "array, a, a1, a2, conductivity, z \n " + str(array) + ',' + str(a) + ',' + str(a1) + ',' + str(a2) + ',' + str(conductivity) + ',' + str(z) + "\n"
         
-        self.xtitle = 'Relative Position (x)'
-        self.ytitle = 'Relative Response'
-        self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
-        self.plot_2d()
+        #self.xtitle = 'Relative Position (x)'
+        #self.ytitle = 'Relative Response'
+        #self.title = 'Resistivity Pseudosection with ' + str(array) + ' over ' + str(conductivity) + ' ohm/m sphere.'
+        #self.plot_2d()
        
     def save_csv(self):
         

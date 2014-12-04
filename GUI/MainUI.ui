@@ -112,21 +112,14 @@
            <x>0</x>
            <y>24</y>
            <width>306</width>
-           <height>251</height>
+           <height>275</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_width">
             <property name="text">
              <string>Width (y-extent)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Depth Extent (z-extent)</string>
             </property>
            </widget>
           </item>
@@ -137,10 +130,20 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_length">
             <property name="text">
              <string>Length (x-extent)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_magsus"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_depth">
+            <property name="text">
+             <string>Depth (Z)</string>
             </property>
            </widget>
           </item>
@@ -161,15 +164,24 @@
             </item>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_depth">
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_length"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_strike"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_strike">
             <property name="text">
-             <string>Depth (Z)</string>
+             <string>Strike (degrees)</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_magsus"/>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_depth"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_width"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_magsus">
@@ -178,26 +190,14 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_depth"/>
-          </item>
-          <item row="4" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_width"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_length"/>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_strike">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Strike (degrees)</string>
+             <string>Depth Extent (z-extent)</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QDoubleSpinBox" name="doubleSpinBox_strike"/>
-          </item>
-          <item row="6" column="1">
+          <item row="3" column="1">
            <widget class="QDoubleSpinBox" name="doubleSpinBox_depthextent"/>
           </item>
          </layout>
