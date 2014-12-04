@@ -104,7 +104,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_xsample.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
-        self.doubleSpinBox_traverseint.setDisabled(True)
+        self.doubleSpinBox_ylength.setDisabled(True)
+        self.doubleSpinBox_ysample.setDisabled(True)
         self.doubleSpinBox_fieldinclination.setDisabled(True)
         
         #Enable / Disable instrument parameters
@@ -299,8 +300,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         a2 = self.doubleSpinBox_a2.value()
         
         #Create an array of x positions
-        stop = self.doubleSpinBox_traverselength.value()/2.0
-        sample = self.doubleSpinBox_samplingint.value()
+        stop = self.doubleSpinBox_xlength.value()/2.0
+        sample = self.doubleSpinBox_xsample.value()
         x = np.arange(-stop,stop+sample,sample)
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()] #Sphere Conductivity
@@ -329,8 +330,8 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         array_range = np.arange(a, a1 + a2, a2) 
 
         #Create an array of x positions        
-        stop = self.doubleSpinBox_traverselength.value()/2.0
-        sample = self.doubleSpinBox_samplingint.value()
+        stop = self.doubleSpinBox_xlength.value()/2.0
+        sample = self.doubleSpinBox_xsample.value()
         x = np.arange(-stop,stop+sample,sample)
         
         conductivity = [1.0e+6,1.0e-6][self.comboBox_conductivity.currentIndex()] #Sphere Conductivity
