@@ -57,7 +57,6 @@ class ModellerMainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_xsample.setSingleStep(0.05)
         
         #Disables magnetometry parameters--irrelevant for res modelling
-        self.doubleSpinBox_traverseint.setDisabled(True)
         self.doubleSpinBox_ylength.setDisabled(True)
         self.doubleSpinBox_ysample.setDisabled(True)
         self.doubleSpinBox_fieldinclination.setDisabled(True)
